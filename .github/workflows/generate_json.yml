@@ -20,6 +20,7 @@ jobs:
 
       - name: Run Python Script
         run: |
+          pip install -r requirements.txt
           python script.py
           git add NIFTY.json
           git commit -m "Update JSON file"
