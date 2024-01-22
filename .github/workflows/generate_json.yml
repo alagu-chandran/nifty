@@ -20,6 +20,8 @@ jobs:
 
       - name: Run Python Script
         run: |
+          git config --global user.email "alaguku02@mail.com"
+          git config --global user.name "Alagu Karuppiah"
           pip install -r requirements.txt
           python script.py
           git add NIFTY.json
