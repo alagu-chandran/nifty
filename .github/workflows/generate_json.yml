@@ -1,0 +1,26 @@
+name: Generate JSON
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-j1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Run Python Script
+        run: |
+          python script.py
+          git add NIFTY.json
+          git commit -m "Update JSON file"
+          git push
