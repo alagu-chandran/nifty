@@ -7,7 +7,6 @@ from time import sleep
 from requests.models import ReadTimeoutError
 from datetime import datetime, timedelta
 
-
 def get_previous_day():
     # Get the current date
     current_date = datetime.now()
