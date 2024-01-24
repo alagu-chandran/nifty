@@ -24,6 +24,8 @@ jobs:
           git config --global user.name "Alagu Karuppiah"
           pip install -r requirements.txt
           python script.py
+          git add BANKNIFTY.json
           git add NIFTY.json
+          git add FINNIFTY.json
           git commit -m "Update JSON file"
           git push
