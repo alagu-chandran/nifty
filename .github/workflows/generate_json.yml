@@ -1,9 +1,8 @@
 name: Generate JSON
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: '0 19 * * *'
 
 jobs:
   generate-j1:
