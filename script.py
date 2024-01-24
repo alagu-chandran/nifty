@@ -108,7 +108,7 @@ class NSE:
         self.previous_day = get_previous_day()
         
 if __name__ == "__main__":
-    index = "NIFTY"
+    index = "BANKNIFTY"
     nse = NSE()
     active = nse.fetch_active_contracts(index)
     import json
