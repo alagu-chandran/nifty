@@ -128,9 +128,9 @@ if __name__ == "__main__":
     with open(f"{index}.json", mode='w+') as json_out:
         json.dump(active, json_out)
 
-    index = "MIDCPNIFTY"
-    nse = NSE()
-    active = nse.fetch_active_contracts(index)
-    import json
-    with open(f"{index}.json", mode='w+') as json_out:
-        json.dump(active, json_out)
+    # index = "MIDCPNIFTY"
+    # nse = NSE()
+    # active = nse.fetch_active_contracts(index)
+    # import json
+    # with open(f"{index}.json", mode='w+') as json_out:
+    #     json.dump(active, json_out)
