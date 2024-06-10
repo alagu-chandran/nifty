@@ -76,7 +76,7 @@ class NSE:
         uri = f"api/quote-derivative?symbol={symbol}"
         data = self.connect_nse(uri)
         instrument_type = "Stock Options"
-        if symbol in ["NIFTY","BANKNIFTY","FINNIFTY"]:
+        if symbol in ["NIFTY","BANKNIFTY","FINNIFTY", "MIDCPNIFTY"]:
             instrument_type = "Index Options"
         if data['status'] == "success":
             expiry_date = self.get_current_expiry(data['response']['expiryDates'])
@@ -108,10 +108,11 @@ class NSE:
         self.previous_day = get_previous_day()
         
 if __name__ == "__main__":
+    import json
+    
     index = "BANKNIFTY"
     nse = NSE()
     active = nse.fetch_active_contracts(index)
-    import json
     with open(f"{index}.json", mode='w+') as json_out:
         json.dump(active, json_out)
     
@@ -124,13 +125,11 @@ if __name__ == "__main__":
     index = "FINNIFTY"
     nse = NSE()
     active = nse.fetch_active_contracts(index)
-    import json
     with open(f"{index}.json", mode='w+') as json_out:
         json.dump(active, json_out)
 
-    # index = "MIDCPNIFTY"
-    # nse = NSE()
-    # active = nse.fetch_active_contracts(index)
-    # import json
-    # with open(f"{index}.json", mode='w+') as json_out:
-    #     json.dump(active, json_out)
+    index = "MIDCPNIFTY"
+    nse = NSE()
+    active = nse.fetch_active_contracts(index)
+    with open(f"{index}.json", mode='w+') as json_out:
+        json.dump(active, json_out)
