@@ -29,6 +29,6 @@ jobs:
           git add BANKNIFTY.json
           git add NIFTY.json
           git add FINNIFTY.json
-          # git add MIDCPNIFTY.json
+          git add MIDCPNIFTY.json
           git commit -m "Update JSON file"
           git push
