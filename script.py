@@ -9,6 +9,14 @@ from datetime import datetime, timedelta
 
 indices = ["NIFTY","BANKNIFTY","FINNIFTY", "MIDCPNIFTY"]
 
+indices_mapping = {
+    "NIFTY": "NIFTY 50",
+    "BANKNIFTY": "NIFTY BANK",
+    "MIDCPNIFTY":"NIFTY MIDCAP SELECT",
+    "FINNIFTY":"NIFTY FINANCIAL SERVICES"
+}
+
+
 def get_previous_day():
     # Get the current date
     current_date = datetime.now()
@@ -20,6 +28,15 @@ def get_previous_day():
     previous_day_formatted = current_date.strftime("%d.%m.%Y")
 
     return previous_day_formatted
+
+def get_previous_day_historical():
+    # Get the current date
+    current_date = datetime.now()
+
+    # Calculate the previous day
+    previous_day = current_date - timedelta(days=1)
+
+    return previous_day.strftime("%d-%m-%Y"), current_date.strftime("%d-%m-%Y")
 
 class NSE:
 
@@ -102,6 +119,23 @@ class NSE:
                     
             return new_contracts if new_contracts else []
         return []
+    
+    def get_historical(self, symbol ,from_date, to_date):
+        uri = f"api/historical/indicesHistory?indexType={symbol}&from={from_date}&to={to_date}"
+        data = self.connect_nse(uri)
+        
+        index_performance = {
+            "open":"", "high":"", "low":"", "close":""
+        }
+
+        if data['status'] == "success":
+            index_performance['open'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_OPEN_INDEX_VAL']
+            index_performance['high'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_HIGH_INDEX_VAL']
+            index_performance['low'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_LOW_INDEX_VAL']
+            index_performance['close'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_CLOSE_INDEX_VAL']
+
+
+        return index_performance
 
 
     def __init__(self) -> None:
@@ -110,11 +144,19 @@ class NSE:
         self.previous_day = get_previous_day()
         
 if __name__ == "__main__":
+    
+    _, to_date = get_previous_day_historical()
+    
     import json
 
-    for index in indices:
+    for index in indices_mapping:
     
         nse = NSE()
         active = nse.fetch_active_contracts(index)
+        today_data = nse.get_historical(indices_mapping[index], from_date=to_date, to_date=to_date)
+        summary = {
+            "active":active,
+            "summary":today_data
+        }
         with open(f"{index}.json", mode='w+') as json_out:
-            json.dump(active, json_out)
+            json.dump(summary, json_out)
