@@ -34,7 +34,7 @@ def get_previous_day_historical():
     current_date = datetime.now()
 
     # Calculate the previous day
-    previous_day = current_date - timedelta(days=1)
+    previous_day = current_date - timedelta(days=7)
 
     return previous_day.strftime("%d-%m-%Y"), current_date.strftime("%d-%m-%Y")
 
@@ -129,10 +129,12 @@ class NSE:
         }
 
         if data['status'] == "success":
-            index_performance['open'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_OPEN_INDEX_VAL']
-            index_performance['high'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_HIGH_INDEX_VAL']
-            index_performance['low'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_LOW_INDEX_VAL']
-            index_performance['close'] = data['response']['data']['indexCloseOnlineRecords'][0]['EOD_CLOSE_INDEX_VAL']
+            index = len(data['response']['data']['indexCloseOnlineRecords'])
+            index = index - 1
+            index_performance['open'] = data['response']['data']['indexCloseOnlineRecords'][index]['EOD_OPEN_INDEX_VAL']
+            index_performance['high'] = data['response']['data']['indexCloseOnlineRecords'][index]['EOD_HIGH_INDEX_VAL']
+            index_performance['low'] = data['response']['data']['indexCloseOnlineRecords'][index]['EOD_LOW_INDEX_VAL']
+            index_performance['close'] = data['response']['data']['indexCloseOnlineRecords'][index]['EOD_CLOSE_INDEX_VAL']
 
 
         return index_performance
@@ -145,7 +147,7 @@ class NSE:
         
 if __name__ == "__main__":
     
-    _, to_date = get_previous_day_historical()
+    from_date, to_date = get_previous_day_historical()
     
     import json
 
@@ -153,7 +155,7 @@ if __name__ == "__main__":
     
         nse = NSE()
         active = nse.fetch_active_contracts(index)
-        today_data = nse.get_historical(indices_mapping[index], from_date=to_date, to_date=to_date)
+        today_data = nse.get_historical(indices_mapping[index], from_date=from_date, to_date=to_date)
         summary = {
             "active":active,
             "summary":today_data
