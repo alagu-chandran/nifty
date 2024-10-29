@@ -99,11 +99,11 @@ function duplicateAndRenameSheet() {
 
 function fetchDataWithParams(message) {
   // Specify the base URL
-  var baseUrl = "https://api.telegram.org/bot5587231907:AAEvfLOyRPYRUl8bkJgtr7svFSqxRpB7Rg0/sendMessage";
+  var baseUrl = "";
 
   // Specify parameters
   var params = {
-    "chat_id": "-1002056977910",
+    "chat_id": "-",
     "text": message,
     // Add more parameters as needed
   };
