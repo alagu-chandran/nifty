@@ -11,9 +11,9 @@ indices = ["NIFTY","BANKNIFTY","FINNIFTY", "MIDCPNIFTY"]
 
 indices_mapping = {
     "NIFTY": "NIFTY 50",
-    "BANKNIFTY": "NIFTY BANK",
-    "MIDCPNIFTY":"NIFTY MIDCAP SELECT",
-    "FINNIFTY":"NIFTY FINANCIAL SERVICES"
+    # "BANKNIFTY": "NIFTY BANK",
+    # "MIDCPNIFTY":"NIFTY MIDCAP SELECT",
+    # "FINNIFTY":"NIFTY FINANCIAL SERVICES"
 }
 
 
@@ -152,6 +152,8 @@ if __name__ == "__main__":
     import json
 
     for index in indices_mapping:
+
+        print(f"Processing..{index}")
     
         nse = NSE()
         active = nse.fetch_active_contracts(index)
